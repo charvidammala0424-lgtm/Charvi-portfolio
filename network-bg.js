@@ -44,10 +44,10 @@ class Particle {
         }
         this.alpha = Math.max(0.3, Math.min(1.0, this.alpha));
 
-        // Use bright gold style color for sparkles: rgba(232, 211, 168, ...)
-        ctx.fillStyle = `rgba(232, 211, 168, ${this.alpha})`;
+        // Use bright lavender style color for sparkles: rgba(199, 125, 255, ...)
+        ctx.fillStyle = `rgba(199, 125, 255, ${this.alpha})`;
         ctx.shadowBlur = this.size * 3.5;
-        ctx.shadowColor = 'rgba(232, 211, 168, 0.9)';
+        ctx.shadowColor = 'rgba(199, 125, 255, 0.9)';
 
         if (this.baseSize > 1.5) {
             // Draw a small 4-point star for larger twinkles
@@ -100,6 +100,43 @@ function init() {
 }
 
 // Animation loop
+function connect() {
+    let opacityValue = 1;
+    for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a; b < particlesArray.length; b++) {
+            let dx = particlesArray[a].x - particlesArray[b].x;
+            let dy = particlesArray[a].y - particlesArray[b].y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 110) {
+                opacityValue = 1 - (distance / 110);
+                ctx.strokeStyle = `rgba(199, 125, 255, ${opacityValue * 0.15})`;
+                ctx.lineWidth = 0.8;
+                ctx.beginPath();
+                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                ctx.stroke();
+            }
+        }
+        
+        // Connect to mouse
+        if (mouse.x !== undefined && mouse.y !== undefined) {
+            let dx = particlesArray[a].x - mouse.x;
+            let dy = particlesArray[a].y - mouse.y;
+            let distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < mouse.radius) {
+                opacityValue = 1 - (distance / mouse.radius);
+                ctx.strokeStyle = `rgba(224, 170, 255, ${opacityValue * 0.25})`;
+                ctx.lineWidth = 1.0;
+                ctx.beginPath();
+                ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                ctx.lineTo(mouse.x, mouse.y);
+                ctx.stroke();
+            }
+        }
+    }
+}
+
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -107,6 +144,7 @@ function animate() {
     for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
     }
+    connect();
 }
 
 // Handle window resize
