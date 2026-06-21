@@ -117,7 +117,6 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
 }
 
 body {
@@ -145,8 +144,6 @@ body {
 section {
   position: relative;
   overflow: hidden;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
 .section-container {
@@ -1448,9 +1445,247 @@ footer p {
   margin-top: 48px;
 }
 
+/* GPA Badge Design */
+.gpa-badge {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(224, 170, 255, 0.08);
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Compact Projects Redesign */
+.project-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.project-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.project-desc {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.project-image-column {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.project-image-wrapper {
+  border-radius: 24px;
+  border: 1.5px solid var(--border-gold);
+  padding: 12px;
+  background: rgba(157, 78, 221, 0.05);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  width: 100%;
+  max-width: 520px;
+  transition: transform var(--transition);
+}
+
+.project-image-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.project-img {
+  border-radius: 16px;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* Certifications Gallery Redesign */
+.certifications-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+  width: 100%;
+}
+
+.certification-gallery-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 28px;
+  border-radius: 24px;
+  min-height: 250px;
+  cursor: pointer;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+
+.cert-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+}
+
+.cert-category-badge {
+  color: var(--soft-gold);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.cert-date {
+  color: rgba(224, 170, 255, 0.7);
+}
+
+.cert-card-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 1.15rem;
+  line-height: 1.4;
+  margin-bottom: 12px;
+}
+
+.cert-card-issuer {
+  font-size: 0.95rem;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.btn-cert-view {
+  width: fit-content;
+  padding: 10px 20px;
+  font-size: 0.88rem;
+  background: transparent;
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+}
+
+.btn-cert-view:hover {
+  background: var(--border-gold);
+  color: var(--white);
+}
+
+/* Lightbox Modal */
+.cert-lightbox-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(9, 3, 18, 0.96);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.cert-lightbox-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  font-size: 3rem;
+  color: var(--white);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.lightbox-close:hover {
+  color: var(--gold);
+}
+
+.lightbox-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90%;
+  max-height: 85%;
+  gap: 20px;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  object-fit: contain;
+  border: 2px solid var(--border-gold);
+}
+
+#lightbox-caption {
+  color: var(--white);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
+#lightbox-caption h4 {
+  color: var(--gold);
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+
+#lightbox-caption p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* Back to Top Button */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--secondary-bg);
+  border: 1px solid var(--border-gold);
+  color: var(--gold);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 10px 25px rgba(157, 78, 221, 0.25);
+}
+
+.back-to-top-btn:hover {
+  background: var(--border-gold);
+  color: var(--white);
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(157, 78, 221, 0.45);
+}
+
 @media (max-width: 1120px) {
   .hero-grid,
   .about-grid,
+  .project-grid,
   .experience-grid,
   .certifications-grid,
   .contact-container {
@@ -1542,28 +1777,6 @@ footer p {
   .category-filters {
     justify-content: center;
   }
-
-  .certificate-preview-container {
-    min-height: auto !important;
-    padding: 20px !important;
-  }
-
-  .certificate-preview {
-    min-height: auto !important;
-  }
-
-  .preview-pdf-wrapper {
-    height: 300px !important;
-  }
-
-  .certificate-preview-card {
-    padding: 20px !important;
-    gap: 16px !important;
-  }
-
-  .certificate-preview-card h4 {
-    font-size: 1.3rem !important;
-  }
 }
 
 @media (max-width: 768px) {
@@ -1622,9 +1835,10 @@ footer p {
 
   .hero-grid,
   .about-grid,
+  .project-grid,
   .experience-grid,
   .skills-grid,
-  .certifications-grid,
+  .certifications-gallery-grid,
   .contact-container {
     grid-template-columns: 1fr;
     gap: 24px;
@@ -1647,6 +1861,7 @@ footer p {
   .project-card,
   .skill-card,
   .timeline-item,
+  .certification-gallery-card,
   .certificate-details-container,
   .certificate-preview-container,
   .contact-card,
@@ -1688,6 +1903,23 @@ footer p {
     left: 50% !important;
     transform: translate(-50%, 0) rotate(-3deg) !important;
     bottom: -20px !important;
+  }
+
+  .back-to-top-btn {
+    width: 40px !important;
+    height: 40px !important;
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+
+  .back-to-top-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .body-copy {
+    font-size: 1.05rem !important;
+    line-height: 1.7 !important;
   }
 }
 
