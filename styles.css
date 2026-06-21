@@ -1762,9 +1762,10 @@ footer p {
     -webkit-backdrop-filter: none;
     display: flex;
     flex-direction: row;
+    flex-wrap: nowrap !important;
     justify-content: flex-start;
     align-items: center;
-    gap: 16px;
+    gap: 10px !important;
     z-index: auto;
     margin: 0;
     padding: 0 4px;
@@ -1783,15 +1784,16 @@ footer p {
   .nav-menu li {
     width: auto;
     text-align: left;
+    flex-shrink: 0;
   }
   
   .nav-link {
-    font-size: 0.85rem;
-    letter-spacing: 1px;
+    font-size: 0.72rem !important;
+    letter-spacing: 0.5px !important;
   }
 
   .floating-nav nav {
-    gap: 12px;
+    gap: 10px;
     padding: 12px 16px;
   }
 
