@@ -1487,7 +1487,7 @@ footer p {
     right: -100%;
     width: 100%;
     height: 100vh;
-    background: rgba(9, 3, 18, 0.96);
+    background: rgba(9, 3, 18, 0.98);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     display: flex;
@@ -1518,21 +1518,43 @@ footer p {
 
   .hero-left-column h1,
   .hero-name {
-    font-size: clamp(2.8rem, 8vw, 4.5rem);
+    font-size: clamp(2.5rem, 8vw, 4rem);
     white-space: normal;
   }
 
   .hero-image-wrapper {
-    width: 360px;
-    height: 360px;
+    width: 320px;
+    height: 320px;
   }
 
   .section-container {
-    padding: 120px 0;
+    padding: 80px 0;
   }
 
   .category-filters {
     justify-content: center;
+  }
+
+  .certificate-preview-container {
+    min-height: auto !important;
+    padding: 20px !important;
+  }
+
+  .certificate-preview {
+    min-height: auto !important;
+  }
+
+  .preview-pdf-wrapper {
+    height: 300px !important;
+  }
+
+  .certificate-preview-card {
+    padding: 20px !important;
+    gap: 16px !important;
+  }
+
+  .certificate-preview-card h4 {
+    font-size: 1.3rem !important;
   }
 }
 
@@ -1548,15 +1570,46 @@ footer p {
 
 @media (max-width: 640px) {
   .floating-nav nav {
-    padding: 14px 20px;
+    padding: 12px 16px;
+  }
+
+  .nav-actions .resume-button {
+    padding: 8px 16px !important;
+    font-size: 0.85rem !important;
   }
 
   .container {
-    padding: 0 20px;
+    padding: 0 16px;
   }
 
   .section-container {
-    padding: 80px 0;
+    padding: 60px 0;
+  }
+
+  .hero-portfolio-text {
+    font-size: clamp(2.5rem, 12vw, 5rem) !important;
+  }
+
+  .hero-creative-text {
+    font-size: clamp(2.2rem, 9vw, 4.5rem) !important;
+  }
+
+  .hero-pill-badge {
+    padding: 12px 24px !important;
+  }
+
+  .bold-title {
+    font-size: clamp(2.2rem, 8vw, 3.2rem) !important;
+  }
+
+  .script-overlay {
+    font-size: clamp(1.8rem, 7vw, 2.6rem) !important;
+    left: 20px !important;
+    bottom: -36px !important;
+  }
+
+  .heading-container {
+    margin-bottom: 56px !important;
   }
 
   .hero-grid,
@@ -1565,16 +1618,21 @@ footer p {
   .certifications-grid,
   .contact-container {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 24px;
+  }
+
+  .about-image-container {
+    min-height: auto !important;
+    aspect-ratio: 1 !important;
   }
 
   .hero-image-wrapper {
-    width: 280px;
-    height: 280px;
+    width: 260px;
+    height: 260px;
   }
 
   .editorial-title {
-    font-size: clamp(2.4rem, 10vw, 3.6rem);
+    font-size: clamp(2rem, 8vw, 2.8rem);
   }
 
   .project-card,
@@ -1584,12 +1642,43 @@ footer p {
   .certificate-preview-container,
   .contact-card,
   .contact-form {
-    padding: 28px;
-    border-radius: 24px;
+    padding: 24px;
+    border-radius: 20px;
   }
 
   .btn {
     width: 100%;
+  }
+
+  .timeline-container {
+    padding-left: 16px !important;
+  }
+
+  .timeline-container::before {
+    left: 8px !important;
+  }
+
+  .timeline-item {
+    padding: 20px 16px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .timeline-item::before {
+    left: -20px !important;
+    top: 24px !important;
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  #thank-you .bold-title {
+    font-size: clamp(2.2rem, 10vw, 4rem) !important;
+  }
+
+  #thank-you .script-overlay {
+    font-size: clamp(1.8rem, 8vw, 3.2rem) !important;
+    left: 50% !important;
+    transform: translate(-50%, 0) rotate(-3deg) !important;
+    bottom: -20px !important;
   }
 }
 
