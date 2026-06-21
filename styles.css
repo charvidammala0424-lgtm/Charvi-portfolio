@@ -1443,9 +1443,15 @@ footer p {
 @media (max-width: 1120px) {
   .hero-grid,
   .about-grid,
+  .experience-grid,
   .certifications-grid,
   .contact-container {
     grid-template-columns: 1fr;
+  }
+
+  .experience-left-column {
+    position: static !important;
+    margin-bottom: 32px;
   }
 
   .skills-grid {
@@ -1458,8 +1464,56 @@ footer p {
 }
 
 @media (max-width: 840px) {
+  .hamburger-btn {
+    display: flex;
+  }
+  
+  .hamburger-btn.active span:nth-child(1) {
+    transform: rotate(45deg);
+  }
+  
+  .hamburger-btn.active span:nth-child(2) {
+    width: 0%;
+    opacity: 0;
+  }
+  
+  .hamburger-btn.active span:nth-child(3) {
+    transform: rotate(-45deg);
+  }
+
   .nav-menu {
-    gap: 14px;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100vh;
+    background: rgba(9, 3, 18, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 55;
+    margin: 0;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+  
+  .nav-menu.active {
+    right: 0;
+  }
+  
+  .nav-menu li {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .nav-link {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
   }
 
   .hero-left-column h1,
@@ -1482,13 +1536,19 @@ footer p {
   }
 }
 
+@media (max-width: 768px) {
+  html {
+    scroll-snap-type: none !important;
+  }
+  section {
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+  }
+}
+
 @media (max-width: 640px) {
   .floating-nav nav {
     padding: 14px 20px;
-  }
-
-  .nav-menu {
-    display: none;
   }
 
   .container {
@@ -1589,12 +1649,47 @@ body::before {
   transform: translateY(0);
 }
 
+/* Hamburger Button */
+.hamburger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 60;
+}
+
+.hamburger-btn span {
+  width: 100%;
+  height: 2px;
+  background-color: var(--white);
+  transition: all 0.3s ease-in-out;
+  transform-origin: left center;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
 /* Custom Cursor Styling */
 html, body {
   cursor: none !important;
 }
 a, button, input, textarea, [role="button"], .slider-dot, .filter-btn, .about-image-wrapper, .experience-image-wrapper, .hover-highlight-photo {
   cursor: none !important;
+}
+
+/* Touch Device Overrides */
+html.touch-device, html.touch-device * {
+  cursor: auto !important;
+}
+html.touch-device .custom-cursor-dot,
+html.touch-device .custom-cursor-outline {
+  display: none !important;
 }
 
 .custom-cursor-dot {

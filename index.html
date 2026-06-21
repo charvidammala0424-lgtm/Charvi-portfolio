@@ -68,6 +68,11 @@
 
     <header class="floating-nav" id="header">
         <nav aria-label="Main Navigation">
+            <button class="hamburger-btn" aria-label="Toggle Menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <ul class="nav-menu">
                 <li><a href="#about" class="nav-link">ABOUT</a></li>
                 <li><a href="#education" class="nav-link">EDUCATION</a></li>
@@ -798,16 +803,52 @@
             });
         };
 
+        const initMobileMenu = () => {
+            const hamburger = document.querySelector('.hamburger-btn');
+            const navMenu = document.querySelector('.nav-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            if (!hamburger || !navMenu) return;
+            
+            hamburger.addEventListener('click', () => {
+                const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+                hamburger.setAttribute('aria-expanded', !expanded);
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+            });
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.setAttribute('aria-expanded', 'false');
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                });
+            });
+        };
+
+        const detectTouchDevice = () => {
+            const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+            if (isTouch) {
+                document.documentElement.classList.add('touch-device');
+            }
+        };
+
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
+                detectTouchDevice();
                 initCustomCursor();
                 initContactForm();
                 initScrollNavbar();
+                initMobileMenu();
             });
         } else {
+            detectTouchDevice();
             initCustomCursor();
             initContactForm();
             initScrollNavbar();
+            initMobileMenu();
         }
     </script>
     <!-- Custom Cursor elements -->
