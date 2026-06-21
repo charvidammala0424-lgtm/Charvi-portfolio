@@ -8,7 +8,7 @@
     <meta name="description"
         content="Professional portfolio of Lakshmi Sai Charvi Dammala, Frontend Developer & Web Development Intern specializing in clean design, cybersecurity, and modern web technologies.">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="styles.css?v=1.6">
+    <link rel="stylesheet" href="styles.css?v=1.7">
     <style>
         /* Override external CSS pseudo-elements to ensure only DEVELOPER appears */
         .hero-section::before,
@@ -371,8 +371,19 @@
                     <button type="button" class="btn filter-btn">Quality &amp; Process</button>
                 </div>
 
-                <div class="certifications-gallery-grid" id="cert-gallery">
-                    <!-- Rendered dynamically via JavaScript -->
+                <div class="cert-slider-wrapper fade-up">
+                    <button type="button" class="cert-nav-btn prev-btn" aria-label="Previous Certificate">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <div class="cert-slider-container" id="cert-slider">
+                        <!-- Rendered dynamically via JavaScript -->
+                    </div>
+                    <button type="button" class="cert-nav-btn next-btn" aria-label="Next Certificate">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                </div>
+                <div class="cert-slider-dots" id="cert-dots">
+                    <!-- Dots dynamically rendered -->
                 </div>
             </div>
         </section>
@@ -461,7 +472,7 @@
     <!-- Network Animation Script -->
     <script src="network-bg.js?v=1.1" defer></script>
     <!-- Scroll Animation Script -->
-    <script src="animations.js?v=1.6" defer></script>
+    <script src="animations.js?v=1.7" defer></script>
     <script>
         const certificationSlides = [
             {
@@ -530,43 +541,95 @@
         ];
 
         const initCertificatesGallery = () => {
-            const gallery = document.getElementById('cert-gallery');
+            const slider = document.getElementById('cert-slider');
+            const dotsContainer = document.getElementById('cert-dots');
             const filterBtns = document.querySelectorAll('.filter-btn');
             const lightbox = document.getElementById('cert-lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
             const lightboxCaption = document.getElementById('lightbox-caption');
             const closeBtn = document.querySelector('.lightbox-close');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
 
-            if (!gallery) return;
+            if (!slider || !dotsContainer) return;
 
-            const renderGallery = (categoryFilter = 'all') => {
-                gallery.innerHTML = '';
-                const filtered = certificationSlides.filter(slide => {
+            let activeIndex = 0;
+            let currentFilteredSlides = [];
+
+            const updateSlider = () => {
+                const cards = slider.querySelectorAll('.cert-slider-card');
+                if (cards.length === 0) return;
+
+                if (activeIndex >= cards.length) activeIndex = cards.length - 1;
+                if (activeIndex < 0) activeIndex = 0;
+
+                cards.forEach((card, idx) => {
+                    if (idx === activeIndex) {
+                        card.classList.add('active-slide');
+                    } else {
+                        card.classList.remove('active-slide');
+                    }
+                });
+
+                const dots = dotsContainer.querySelectorAll('.slider-dot');
+                dots.forEach((dot, idx) => {
+                    dot.classList.toggle('active', idx === activeIndex);
+                });
+
+                const activeCard = cards[activeIndex];
+                if (activeCard) {
+                    const scrollLeft = activeCard.offsetLeft - (slider.clientWidth - activeCard.clientWidth) / 2;
+                    slider.scrollTo({
+                        left: scrollLeft,
+                        behavior: 'smooth'
+                    });
+                }
+            };
+
+            const renderSlider = (categoryFilter = 'all') => {
+                slider.innerHTML = '';
+                dotsContainer.innerHTML = '';
+                activeIndex = 0;
+
+                currentFilteredSlides = certificationSlides.filter(slide => {
                     if (categoryFilter.toLowerCase() === 'all' || categoryFilter.toLowerCase() === 'all credentials') return true;
-                    // Standardize names for filtering
                     const cat1 = slide.category.toLowerCase().replace('&', 'and').trim();
                     const cat2 = categoryFilter.toLowerCase().replace('&', 'and').trim();
                     return cat1.includes(cat2) || cat2.includes(cat1);
                 });
 
-                filtered.forEach(slide => {
+                if (currentFilteredSlides.length === 0) {
+                    slider.innerHTML = '<div style="color:var(--muted); text-align:center; width:100%; padding: 40px;">No certificates found in this category.</div>';
+                    return;
+                }
+
+                currentFilteredSlides.forEach((slide, idx) => {
+                    const dot = document.createElement('button');
+                    dot.className = `slider-dot ${idx === 0 ? 'active' : ''}`;
+                    dot.setAttribute('aria-label', `Go to slide ${idx + 1}`);
+                    dot.addEventListener('click', () => {
+                        activeIndex = idx;
+                        updateSlider();
+                    });
+                    dotsContainer.appendChild(dot);
+
                     const card = document.createElement('article');
-                    card.className = 'certification-gallery-card card-glass fade-up visible';
+                    card.className = `cert-slider-card ${idx === 0 ? 'active-slide' : ''}`;
                     card.innerHTML = `
-                        <div class="cert-card-image-wrapper" style="width: 100%; aspect-ratio: 1.6; overflow: hidden; border-radius: 14px; margin-bottom: 20px; border: 1px solid rgba(157, 78, 221, 0.2); background: rgba(9, 3, 18, 0.6); display: flex; align-items: center; justify-content: center;">
-                            <img src="${slide.imageSrc}" alt="${slide.imageAlt}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                        <div class="cert-card-image-wrapper" style="width: 100%; aspect-ratio: 1.5; overflow: hidden; border-radius: 18px; margin-bottom: 20px; border: 1.5px solid rgba(157, 78, 221, 0.2); background: rgba(9, 3, 18, 0.8); display: flex; align-items: center; justify-content: center; position: relative;">
+                            <img src="${slide.imageSrc}" alt="${slide.imageAlt}" style="width: 100%; height: 100%; object-fit: contain; transition: transform 0.4s ease;">
+                            <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: rgba(9, 3, 18, 0.75); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-top: 1px solid rgba(157, 78, 221, 0.15); display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 0.78rem; color: var(--gold); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${slide.category}</span>
+                                <span style="font-size: 0.78rem; color: rgba(255, 255, 255, 0.6);">${slide.date}</span>
+                            </div>
                         </div>
-                        <div class="cert-card-header">
-                            <span class="cert-category-badge">${slide.category}</span>
-                            <span class="cert-date">${slide.date}</span>
-                        </div>
-                        <h4 class="cert-card-title" style="margin-top: 8px;">${slide.title}</h4>
-                        <p class="cert-card-issuer">Issued by ${slide.issuer}</p>
-                        <button class="btn btn-cert-view" aria-label="View ${slide.title} certificate" style="width: 100%; margin-top: 14px; padding: 10px 0; text-align: center; display: block;">Zoom Certificate</button>
+                        <h4 style="font-family: 'Inter', sans-serif; font-weight: 700; color: var(--white); font-size: 1.15rem; line-height: 1.4; margin-bottom: 8px;">${slide.title}</h4>
+                        <p style="font-size: 0.92rem; color: var(--muted); margin-bottom: 16px;">Issued by <strong style="color: var(--soft-gold);">${slide.issuer}</strong></p>
+                        <button class="btn btn-cert-view" aria-label="View ${slide.title} certificate" style="width: 100%; padding: 10px 0; text-align: center; border: 1.5px solid var(--border-gold); background: transparent; color: var(--gold); border-radius: 999px; transition: all 0.3s;">Zoom Certificate</button>
                     `;
 
-                    // Card click opens lightbox
                     const openAction = (e) => {
+                        e.stopPropagation();
                         lightboxImg.src = slide.imageSrc;
                         lightboxImg.alt = slide.imageAlt;
                         lightboxCaption.innerHTML = `<h4>${slide.title}</h4><p>Issued by ${slide.issuer} &bull; ${slide.date}</p>`;
@@ -575,21 +638,71 @@
                         document.body.style.overflow = 'hidden';
                     };
 
-                    card.addEventListener('click', openAction);
-                    gallery.appendChild(card);
+                    card.querySelector('.btn-cert-view').addEventListener('click', openAction);
+                    card.addEventListener('click', () => {
+                        activeIndex = idx;
+                        updateSlider();
+                    });
+
+                    slider.appendChild(card);
+                });
+
+                let scrollTimeout;
+                slider.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        const cards = slider.querySelectorAll('.cert-slider-card');
+                        let closestIdx = 0;
+                        let minDiff = Infinity;
+                        const containerCenter = slider.scrollLeft + slider.clientWidth / 2;
+
+                        cards.forEach((c, index) => {
+                            const cardCenter = c.offsetLeft + c.clientWidth / 2;
+                            const diff = Math.abs(containerCenter - cardCenter);
+                            if (diff < minDiff) {
+                                minDiff = diff;
+                                closestIdx = index;
+                            }
+                        });
+
+                        if (closestIdx !== activeIndex) {
+                            activeIndex = closestIdx;
+                            cards.forEach((c, index) => {
+                                c.classList.toggle('active-slide', index === activeIndex);
+                            });
+                            const dots = dotsContainer.querySelectorAll('.slider-dot');
+                            dots.forEach((dot, index) => {
+                                dot.classList.toggle('active', index === activeIndex);
+                            });
+                        }
+                    }, 50);
                 });
             };
 
-            // Register filters
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    if (activeIndex > 0) {
+                        activeIndex--;
+                        updateSlider();
+                    }
+                });
+                nextBtn.addEventListener('click', () => {
+                    const cards = slider.querySelectorAll('.cert-slider-card');
+                    if (activeIndex < cards.length - 1) {
+                        activeIndex++;
+                        updateSlider();
+                    }
+                });
+            }
+
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     filterBtns.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    renderGallery(btn.textContent.trim());
+                    renderSlider(btn.textContent.trim());
                 });
             });
 
-            // Lightbox close logic
             if (lightbox && closeBtn) {
                 closeBtn.addEventListener('click', () => {
                     lightbox.classList.remove('active');
@@ -605,7 +718,7 @@
                 });
             }
 
-            renderGallery('all');
+            renderSlider('all');
         };
 
         const initBackToTop = () => {
