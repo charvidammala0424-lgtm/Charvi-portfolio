@@ -1744,7 +1744,7 @@ footer p {
   }
 
   .section-container {
-    padding: 80px 0;
+    padding: 80px 40px;
   }
 }
 
@@ -1846,7 +1846,7 @@ footer p {
   }
 
   .section-container {
-    padding: 60px 0;
+    padding: 60px 16px;
   }
 
   .hero-portfolio-text {
@@ -1867,14 +1867,14 @@ footer p {
 
   .script-overlay {
     font-size: clamp(1.1rem, 7vw, 1.6rem) !important;
-    left: 20px !important;
-    bottom: -28px !important;
-    transform: rotate(-3.5deg) scale(0.95) translateY(4px);
+    left: 0 !important;
+    bottom: -24px !important;
+    transform: rotate(-3.5deg) scale(0.95) translateY(4px) !important;
   }
 
   .heading-container {
-    margin-bottom: 96px !important;
-    padding-left: 8px !important;
+    margin-bottom: 48px !important;
+    padding-left: 0 !important;
   }
 
   .heading-container::before {
