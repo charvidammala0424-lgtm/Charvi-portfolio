@@ -1750,55 +1750,49 @@ footer p {
 
 @media (max-width: 840px) {
   .hamburger-btn {
-    display: flex;
-  }
-  
-  .hamburger-btn.active span:nth-child(1) {
-    transform: rotate(45deg);
-  }
-  
-  .hamburger-btn.active span:nth-child(2) {
-    width: 0%;
-    opacity: 0;
-  }
-  
-  .hamburger-btn.active span:nth-child(3) {
-    transform: rotate(-45deg);
+    display: none !important;
   }
 
   .nav-menu {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    height: 100vh;
-    background: rgba(9, 3, 18, 0.98);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    position: static;
+    width: auto;
+    height: auto;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: flex-start;
     align-items: center;
-    gap: 32px;
-    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 55;
+    gap: 16px;
+    z-index: auto;
     margin: 0;
-    padding: 40px;
+    padding: 0 4px;
     box-sizing: border-box;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    flex-grow: 1;
   }
   
-  .nav-menu.active {
-    right: 0;
+  .nav-menu::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
   }
   
   .nav-menu li {
-    width: 100%;
-    text-align: center;
+    width: auto;
+    text-align: left;
   }
   
   .nav-link {
-    font-size: 1.5rem;
-    letter-spacing: 2px;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .floating-nav nav {
+    gap: 12px;
+    padding: 12px 16px;
   }
 
   .hero-left-column h1,
