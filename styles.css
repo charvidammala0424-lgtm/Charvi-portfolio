@@ -71,6 +71,7 @@
   text-transform: none;
   letter-spacing: normal;
   text-shadow: 0 0 15px rgba(157, 78, 221, 0.6);
+  white-space: nowrap;
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, opacity 1.2s ease 0.3s;
 }
 
@@ -1825,12 +1826,18 @@ footer p {
 
   .script-overlay {
     font-size: clamp(1.1rem, 7vw, 1.6rem) !important;
-    left: 20px !important;
-    bottom: -28px !important;
+    left: 0 !important;
+    bottom: -24px !important;
+    transform: rotate(-3.5deg) scale(0.95) translateY(4px) !important;
   }
 
   .heading-container {
     margin-bottom: 48px !important;
+    padding-left: 0 !important;
+  }
+
+  .heading-container::before {
+    display: none !important;
   }
 
   .hero-grid,
@@ -1920,6 +1927,18 @@ footer p {
   .body-copy {
     font-size: 1.05rem !important;
     line-height: 1.7 !important;
+  }
+
+  .footer-container {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 16px !important;
+  }
+
+  .footer-brand {
+    align-items: center !important;
+    text-align: center !important;
   }
 }
 
