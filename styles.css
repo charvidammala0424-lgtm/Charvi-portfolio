@@ -1533,6 +1533,10 @@ footer p {
   transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
+.certification-gallery-card:hover .cert-card-image-wrapper img {
+  transform: scale(1.06);
+}
+
 .cert-card-header {
   display: flex;
   justify-content: space-between;
