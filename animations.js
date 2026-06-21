@@ -42,31 +42,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // 3. Staggered Character Reveal for Headings
+    // 3. Staggered Character Reveal for Headings (Word-safe Wrapping)
     const initTextReveal = () => {
         const headings = document.querySelectorAll('.bold-title');
         headings.forEach(heading => {
             if (heading.id === 'hero-title' || heading.children.length > 0) return; // Skip nested headers
-            const text = heading.textContent;
+            const text = heading.textContent.trim();
             heading.innerHTML = '';
-            text.split('').forEach((char, idx) => {
-                const span = document.createElement('span');
-                span.textContent = char === ' ' ? '\u00A0' : char;
-                span.style.display = 'inline-block';
-                span.style.opacity = '0';
-                span.style.transform = 'translateY(30px) scale(0.9)';
-                span.style.transition = `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 35}ms, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${idx * 35}ms`;
-                heading.appendChild(span);
+            
+            let charIndex = 0;
+            const words = text.split(/\s+/);
+            
+            words.forEach((word, wordIdx) => {
+                const wordSpan = document.createElement('span');
+                wordSpan.style.display = 'inline-block';
+                wordSpan.style.whiteSpace = 'nowrap';
+                
+                word.split('').forEach(char => {
+                    const charSpan = document.createElement('span');
+                    charSpan.textContent = char;
+                    charSpan.style.display = 'inline-block';
+                    charSpan.style.opacity = '0';
+                    charSpan.style.transform = 'translateY(30px) scale(0.9)';
+                    charSpan.style.transition = `opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${charIndex * 35}ms, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${charIndex * 35}ms`;
+                    wordSpan.appendChild(charSpan);
+                    charIndex++;
+                });
+                
+                heading.appendChild(wordSpan);
+                
+                // Add space after word (except last word)
+                if (wordIdx < words.length - 1) {
+                    const spaceSpan = document.createElement('span');
+                    spaceSpan.textContent = '\u00A0';
+                    spaceSpan.style.display = 'inline-block';
+                    heading.appendChild(spaceSpan);
+                }
             });
 
             const textObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        const spans = heading.querySelectorAll('span');
-                        spans.forEach(span => {
-                            span.style.opacity = '1';
-                            span.style.transform = 'translateY(0) scale(1)';
-                        });
+                        const spans = heading.querySelectorAll('span span');
+                        if (spans.length === 0) {
+                            // Fallback if no nested spans
+                            heading.querySelectorAll('span').forEach(span => {
+                                span.style.opacity = '1';
+                                span.style.transform = 'translateY(0) scale(1)';
+                            });
+                        } else {
+                            spans.forEach(span => {
+                                span.style.opacity = '1';
+                                span.style.transform = 'translateY(0) scale(1)';
+                            });
+                        }
                         textObserver.unobserve(heading);
                     }
                 });
