@@ -1440,6 +1440,14 @@ footer p {
   color: var(--muted);
 }
 
+.experience-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 64px;
+  align-items: start;
+  margin-top: 48px;
+}
+
 @media (max-width: 1120px) {
   .hero-grid,
   .about-grid,
@@ -1599,21 +1607,22 @@ footer p {
   }
 
   .bold-title {
-    font-size: clamp(2.2rem, 8vw, 3.2rem) !important;
+    font-size: clamp(1.3rem, 6.5vw, 1.8rem) !important;
   }
 
   .script-overlay {
-    font-size: clamp(1.8rem, 7vw, 2.6rem) !important;
+    font-size: clamp(1.1rem, 7vw, 1.6rem) !important;
     left: 20px !important;
-    bottom: -36px !important;
+    bottom: -28px !important;
   }
 
   .heading-container {
-    margin-bottom: 56px !important;
+    margin-bottom: 48px !important;
   }
 
   .hero-grid,
   .about-grid,
+  .experience-grid,
   .skills-grid,
   .certifications-grid,
   .contact-container {
@@ -1632,7 +1641,7 @@ footer p {
   }
 
   .editorial-title {
-    font-size: clamp(2rem, 8vw, 2.8rem);
+    font-size: clamp(1.4rem, 6vw, 2.0rem) !important;
   }
 
   .project-card,
